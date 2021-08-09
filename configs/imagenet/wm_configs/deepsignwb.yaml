@@ -1,0 +1,58 @@
+wm_scheme:
+  name: wm_deepsignwb
+  layer_dim: 25088
+  layer_index: 62
+  gamma0: 1
+  gamma1: 0.01
+  gamma2: 3
+  gamma3: 0
+  embedding_rate: 5
+  mu_lr: .01
+  num_gaussians: 1
+  from_scratch: False
+  separate_means: False
+  num_classes: 1000
+
+embed:
+  name: wm_deepsignwb_embed
+  keylength: 100
+  epochs: 100
+  check_every_n_batches: 200
+  reduce_lr_by_factor: 1
+
+source_model:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+wm_dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  apply_augmentation: False
+  shuffle: True
+  train: True
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  n_test: 5000
+
+name: deepsignwb
+output_dir: outputs/imagenet/wm/deepsignwb/
+
+

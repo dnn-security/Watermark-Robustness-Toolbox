@@ -1,0 +1,32 @@
+trainer:
+  name: Trainer
+  num_epochs: 60
+
+model:
+  name: cifar_wide_resnet
+  num_classes: 10
+  image_size: 32
+
+dataset:
+  name: CIFAR10DataLoader
+  root: ~/.wrt/data
+  subset: defender
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+  nesterov: True
+
+scheduler:
+  name: MultiStepLR
+  milestones: [20, 35, 50]
+  gamma: 0.2
+
+
+name: resnet
+output_dir: outputs/cifar10/null_models/resnet/

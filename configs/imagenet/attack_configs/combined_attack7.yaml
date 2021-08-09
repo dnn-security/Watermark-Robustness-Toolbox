@@ -1,0 +1,106 @@
+attack_list: [attack1, attack2, attack3]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: True
+name: combined_attack7
+output_dir: outputs/imagenet/attacks/combined_attack7/
+
+attack1:
+  create:
+    name: random_occlusion_attack
+    num_classes: 1000
+
+  remove:
+    name: random_occlusion_removal
+    epochs: 1
+    repeats: 1
+    boost_factor: 100         # Number of times each sample is repeated per epoch.
+    check_every_n_batches: 200
+    epsilon: 0.3
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    apply_augmentation: False
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  subset_dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    class_labels: [ 3, 4 ]
+    apply_augmentation: False
+    apply_normalization: False
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: False
+  name: random_occlusion4
+  output_dir: outputs/imagenet/attacks/random_occlusion4/
+
+attack2:
+  create:
+    name: feature_regularization_attack
+    num_classes: 1000
+
+  remove:
+    name: feature_regularization_removal
+    epochs: 3
+    check_every_n_batches: 1000
+    f_reg: 1
+    norm: 1
+    threshold: 0
+    epsilon: 0.1
+    lr: 0.001
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: False
+  name: feature_regularization2
+  output_dir: outputs/imagenet/attacks/feature_regularization2/
+
+attack3:
+  create:
+    name: input_flipping_attack
+    num_classes: 1000
+
+  remove:
+    name: input_flipping_removal
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: True
+  name: input_flipping
+  output_dir: outputs/imagenet/attacks/input_flipping/
+
+

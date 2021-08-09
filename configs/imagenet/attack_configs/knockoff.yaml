@@ -1,0 +1,43 @@
+create:
+  name: knockoff_attack
+  num_classes: 1000
+
+surrogate_model:
+  name: imagenet_resnet
+  num_classes: 1000
+  image_size: 224
+
+remove:
+  name: knockoff_removal
+  epochs: 60
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+transfer_dataset:
+  name: OpenImagesDataLoader
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  nesterov: True
+
+scheduler:
+  name: ReduceLROnPlateau
+  factor: 0.1
+  patience: 2
+  verbose: True
+
+name: knockoff
+output_dir: outputs/imagenet/attacks/knockoff/

@@ -1,0 +1,114 @@
+attack_list: [attack1, attack2, attack3, attack4]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: True
+name: combined_attack
+output_dir: outputs/imagenet/attacks/combined_attack/
+
+attack1:
+  create:
+    name: weight_shifting_attack
+
+  remove:
+    name: weight_shifting_removal
+    epochs: 5
+    lmbda: 1.5
+    lmbda2: 0
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: False
+  name: weight_shifting1
+  output_dir: outputs/imagenet/attacks/weight_shifting1/
+
+attack2:
+  create:
+    name: adversarial_training_attack
+    eps: [ 0.01, 0.1, 0.25 ]
+    eps_step: 0.01
+    max_iter: 30
+    num_classes: 1000
+
+  remove:
+    name: adversarial_training_removal
+    epochs: 5
+    boost_factor: 10         # Number of times each sample is repeated per epoch.
+    n_max: 5000             # Maximal number of adversarial examples to generate per epoch.
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    apply_augmentation: False
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: False
+  name: adversarial_training1
+  output_dir: outputs/imagenet/attacks/adversarial_training1/
+
+attack3:
+  create:
+    name: label_smoothing_attack
+    num_classes: 1000
+
+  remove:
+    name: label_smoothing_removal
+    epochs: 2
+    epsilon: 0.3
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: False
+  name: label_smoothing
+  output_dir: outputs/imagenet/attacks/label_smoothing/
+
+attack4:
+  create:
+    name: input_flipping_attack
+    num_classes: 1000
+
+  remove:
+    name: input_flipping_removal
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: True
+  name: input_flipping
+  output_dir: outputs/imagenet/attacks/input_flipping/
+
+
+

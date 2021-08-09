@@ -1,0 +1,38 @@
+wm_scheme:
+  name: wm_uchida
+  layer_idx: 8
+  lmbda: 1
+  num_classes: 10
+help: conv2 8, conv3 26 conv4 44
+
+embed:
+  name: wm_uchida_embed
+  epochs: 60
+  keylength: 100
+  patience: 5
+  evaluate_every_n_batches: 200
+
+source_model:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+name: uchida
+output_dir: outputs/cifar10/wm/uchida/
+
+

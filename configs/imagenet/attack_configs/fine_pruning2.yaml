@@ -1,0 +1,22 @@
+create:
+  name: fine_pruning_attack
+  num_classes: 1000
+  ratio: 0.8
+  layer_index: 64
+  layer_name: layer4
+
+remove:
+  name: fine_pruning_removal
+  epochs: 3
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: fine_pruning2
+output_dir: outputs/imagenet/attacks/fine_pruning2/

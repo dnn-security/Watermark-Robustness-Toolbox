@@ -1,0 +1,18 @@
+create:
+  name: input_flipping_attack
+  num_classes: 1000
+
+remove:
+  name: input_flipping_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: True
+name: input_flipping
+output_dir: outputs/imagenet/attacks/input_flipping/

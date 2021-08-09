@@ -1,0 +1,69 @@
+
+attack_list: [attack1, attack2]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 32
+  num_workers: 2
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: True
+name: stacked_attack4
+output_dir: outputs/cifar10/attacks/combined_attack4/
+
+attack1:
+  create:
+    name: adversarial_training_attack
+    eps: [ 0.01, 0.1, 0.25 ]
+    eps_step: 0.01
+    max_iter: 40
+    num_classes: 10
+
+  remove:
+    name: adversarial_training_removal
+    epochs: 5
+
+  dataset:
+    name: CIFAR10DataLoader
+    subset: attacker
+    train: True
+    download: False
+    apply_augmentation: False
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 32
+    num_workers: 2
+
+  true_labels: False
+  name: adversarial_training
+  output_dir: outputs/cifar10/attacks/adversarial_training/
+
+attack2:
+  create:
+    name: rtal_attack
+    num_classes: 10
+
+  remove:
+    name: rtal_removal
+    epochs: 5
+
+  dataset:
+    name: CIFAR10DataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 32
+    num_workers: 2
+
+  true_labels: True
+  name: rtal
+  output_dir: outputs/cifar10/attacks/rtal/

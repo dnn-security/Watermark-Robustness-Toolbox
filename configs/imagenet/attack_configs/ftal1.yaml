@@ -1,0 +1,22 @@
+create:
+  name: ftal_attack
+  num_classes: 1000
+
+remove:
+  name: ftal_removal
+  epochs: 5
+  check_every_n_batches: 200
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  query_labels_n_times: 3
+  n_train: 50000
+
+true_labels: False
+name: ftal
+output_dir: outputs/imagenet/attacks/ftal/

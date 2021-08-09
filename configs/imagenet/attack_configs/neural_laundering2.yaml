@@ -1,0 +1,41 @@
+create:
+  name: neural_laundering_attack
+  extract: True
+  dataset: imagenet
+  num_classes: 1000
+  n_samples: 50000  # Maximum number of samples to load (limited by RAM)
+  dt: 0.2 # threshold to prune fully-connected neurons
+  ct: 1.5 # threshold to prune convolutional layer neurons
+  extract_kwargs: # params for reconstructing the trigger.
+    source_classes: [  3 ]
+    target_classes: [ 4 ]
+    extract_epochs: 60
+    finetune_epochs: 15
+    lmbda: 0.01
+    batch_size: 64
+
+remove:
+  name: neural_laundering_partial_removal
+  boost_factor: 100
+  epochs: 5
+
+subset_dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  class_labels: [3, 4]
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: neural_laundering2
+output_dir: outputs/imagenet/attacks/neural_laundering2

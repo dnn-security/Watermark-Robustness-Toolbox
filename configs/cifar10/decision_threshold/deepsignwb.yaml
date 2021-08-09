@@ -1,0 +1,96 @@
+wm_scheme:
+  name: wm_deepsignwb
+  layer_dim: 24576
+  layer_index: 17
+  gamma0: 10
+  gamma1: 50
+  gamma2: .1
+  gamma3: 0.001
+  num_gaussians: 10
+  from_scratch: False
+  separate_means: False
+  num_classes: 10
+best_setting: 500, 1, 0.01
+
+secret_keys:
+  name: wm_deepsignwb_keygen
+  batch_size: 64
+  num_classes: 10
+  image_size: 32
+
+source_model_architecture:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+null_model_architecture:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+null_models:
+  name: load_null_models_resnet
+  paths: ['outputs/cifar10/null_models/resnet/00000_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00001_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00002_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00003_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00004_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00005_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00006_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00007_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00010_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00011_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00012_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00013_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00014_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00015_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00016_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00017_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00018_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00019_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00020_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00021_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00022_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00023_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00024_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00025_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00026_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00027_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00028_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00029_null_model/best.pth'
+  ]
+  num_classes: 10
+  image_size: 32
+
+
+wm_dataset:
+  name: CIFAR10DataLoader
+  apply_augmentation: False
+  download: False
+  subset: defender
+  shuffle: True
+  train: True
+  root: ~/.wrt/data
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+name: deepsignwb
+output_dir: outputs/cifar10/decision_thresholds/deepsignwb/
+
+

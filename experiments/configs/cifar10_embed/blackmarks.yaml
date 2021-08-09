@@ -1,0 +1,52 @@
+wm_scheme:
+  name: wm_blackmarks
+  lmbda: 0.1
+  eps: 0.1
+  num_variants: 1
+  num_classes: 10
+  compute_new_encoding: True
+
+embed:
+  name: wm_blackmarks_embed
+  epochs: 60
+  decrease_lr_by_factor: 10
+  finetune_batches: 500
+  keylength: 200
+  key_expansion_factor: 10
+  patience: 5
+
+source_model:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+wm_dataset:
+  name: CIFAR10DataLoader
+  apply_normalization: False
+  apply_augmentation: False
+  subset: defender
+  train: True
+  root: ~/.wrt/data
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 128
+  image_size: 32
+  num_workers: 16
+
+name: blackmarks
+output_dir: outputs/cifar10/wm/blackmarks/
+
+

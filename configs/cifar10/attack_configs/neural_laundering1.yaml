@@ -1,0 +1,37 @@
+create:
+  name: neural_laundering_attack
+  extract: True
+  dataset: cifar10   # Required for the reset function (which is currently hard-coded)
+  num_classes: 10
+  n_samples: 50000 # Maximum number of samples to load.
+  dt: 0.3 # threshold to prune fully-connected neurons
+  ct: 1.0 # threshold to prune convolutional layer neurons
+  extract_kwargs: # params for reconstructing the trigger.
+    source_classes: [ 4 ]
+    target_classes: [ 6 ]
+    extract_epochs: 30  # Number of steps to extract a mask
+    extract_steps: 10
+    finetune_epochs: 2
+    finetune_steps: 30
+    lmbda: 0.01
+    batch_size: 64
+
+remove:
+  name: neural_laundering_partial_removal
+  boost_factor: 1
+  epochs: 5
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  apply_augmentation: False
+  download: False
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+  top_k: 1
+
+true_labels: True
+name: neural_laundering1
+output_dir: outputs/cifar10/attacks/neural_laundering1

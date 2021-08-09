@@ -1,0 +1,21 @@
+create:
+  name: weight_shifting_attack
+
+remove:
+  name: weight_shifting_removal
+  epochs: 10
+  lmbda: 1.5
+  check_every_n_batches: 200
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  download: False
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: False
+name: weight_shifting
+output_dir: outputs/cifar10/attacks/weight_shifting/

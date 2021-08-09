@@ -1,0 +1,21 @@
+create:
+  name: weight_shifting_attack
+
+remove:
+  name: weight_shifting_removal
+  epochs: 5
+  lmbda: 2.5
+  lmbda2: 0
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  top_k: 1
+
+true_labels: False
+name: weight_shifting4
+output_dir: outputs/imagenet/attacks/weight_shifting4/

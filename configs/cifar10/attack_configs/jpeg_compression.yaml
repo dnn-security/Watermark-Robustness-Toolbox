@@ -1,0 +1,20 @@
+create:
+  name: jpeg_compression_attack
+  num_classes: 10
+  quality: 95
+
+remove:
+  name: jpeg_compression_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  download: False
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: True
+name: jpeg_compression
+output_dir: outputs/cifar10/attacks/jpeg_compression/

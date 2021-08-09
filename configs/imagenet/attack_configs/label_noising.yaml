@@ -1,0 +1,23 @@
+create:
+  name: label_noising_attack
+  num_classes: 1000
+
+remove:
+  name: label_noising_removal
+  epochs: 5
+  epsilon: 0.8
+  check_every_n_batches: 200
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  n_test: 1000
+  n_train: 100000
+
+true_labels: False
+name: label_noising
+output_dir: outputs/imagenet/attacks/label_noising/

@@ -1,0 +1,21 @@
+create:
+  name: input_noising_attack
+  num_classes: 1000
+  mean: 0
+  std: 0.02
+
+remove:
+  name: input_noising_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+# Dataset is unused, so we can set 'true_labels' to true.
+true_labels: True
+name: input_noising1
+output_dir: outputs/imagenet/attacks/input_noising1/

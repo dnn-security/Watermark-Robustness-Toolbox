@@ -1,0 +1,19 @@
+create:
+  name: weight_quantization_attack
+
+remove:
+  name: weight_quantization_removal
+  epochs: 1
+  bits: 5
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: weight_quantization
+output_dir: outputs/imagenet/attacks/weight_quantization/

@@ -1,0 +1,18 @@
+create:
+  name: feature_shuffling_attack
+
+remove:
+  name: feature_shuffling_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  download: False
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: True
+name: feature_shuffling
+output_dir: outputs/cifar10/attacks/feature_shuffling/

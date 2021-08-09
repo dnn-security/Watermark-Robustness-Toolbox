@@ -1,0 +1,38 @@
+wm_scheme:
+  name: wm_uchida
+  layer_idx: 36
+  lmbda: 0.1
+  num_classes: 1000
+help: layer1 6 layer2 36 layer3 75 layer4 132
+
+embed:
+  name: wm_uchida_embed
+  epochs: 5
+  keylength: 30
+  patience: 5
+  evaluate_every_n_batches: 200
+
+source_model:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: uchida
+output_dir: outputs/imagenet/wm/uchida/
+
+

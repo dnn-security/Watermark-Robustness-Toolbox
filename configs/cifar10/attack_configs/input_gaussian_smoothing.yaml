@@ -1,0 +1,21 @@
+create:
+  name: input_gaussian_smoothing_attack
+  num_classes: 10
+  std: 0.5
+
+remove:
+  name: input_gaussian_smoothing_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  download: False
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+# We do not use the dataset so we can set the labels to true.
+true_labels: True
+name: input_gaussian_smoothing
+output_dir: outputs/cifar10/attacks/input_gaussian_smoothing/

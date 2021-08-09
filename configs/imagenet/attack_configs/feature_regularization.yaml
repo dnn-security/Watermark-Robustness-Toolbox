@@ -1,0 +1,22 @@
+create:
+  name: feature_regularization_attack
+  num_classes: 1000
+
+remove:
+  name: feature_regularization_removal
+  epochs: 5
+  check_every_n_batches: 200
+  f_reg: 0.1
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  n_test: 1000
+
+true_labels: True
+name: feature_regularization
+output_dir: outputs/imagenet/attacks/feature_regularization/

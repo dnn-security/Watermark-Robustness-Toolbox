@@ -1,0 +1,19 @@
+create:
+  name: input_median_smoothing_attack
+  num_classes: 1000
+  kernel_size: 3
+
+remove:
+  name: input_median_smoothing_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: True
+name: input_median_smoothing
+output_dir: outputs/imagenet/attacks/input_median_smoothing/

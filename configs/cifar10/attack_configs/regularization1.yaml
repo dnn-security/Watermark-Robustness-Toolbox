@@ -1,0 +1,23 @@
+create:
+  name: regularization_attack
+  num_classes: 10
+  image_size: 32
+
+remove:
+  name: regularization_removal
+  l2_decay: 0.25
+  reg_epochs: 3
+  max_ft_epochs: 5
+  ft_patience: 5
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  download: False
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+name: regularization
+output_dir: outputs/cifar10/attacks/regularization/

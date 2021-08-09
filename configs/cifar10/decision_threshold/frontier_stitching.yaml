@@ -1,0 +1,88 @@
+wm_scheme:
+  name: wm_frontier_stitching
+  eps: 0.05
+  num_classes: 10
+
+secret_keys:
+  name: wm_frontier_stitching_keygen
+  key_expansion_factor: 10
+  batch_size: 64
+  image_size: 32
+  num_classes: 10
+
+load_pretrained_source_model:
+  name: load_pretrained_model
+  filename: "outputs/cifar10/wm/frontier_stitching/00000_frontier_stitching/best.pth"
+
+source_model_architecture:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+null_model_architecture:
+  name: cifar_wide_resnet
+  image_size: 32
+  num_classes: 10
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+null_models:
+  name: load_null_models_resnet
+  paths: ['outputs/cifar10/null_models/resnet/00000_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00001_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00002_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00003_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00004_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00005_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00006_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00007_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00010_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00011_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00012_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00013_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00014_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00015_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00016_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00017_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00018_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00019_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00020_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00021_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00022_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00023_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00024_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00025_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00026_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00027_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00028_null_model/best.pth',
+          'outputs/cifar10/null_models/resnet/00029_null_model/best.pth'
+  ]
+  num_classes: 10
+  image_size: 32
+
+wm_dataset:
+  name: CIFAR10DataLoader
+  apply_normalization: False
+  apply_augmentation: False
+  subset: defender
+  train: True
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 16
+
+dataset:
+  name: ImageNetDataLoader
+  subset: all
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: frontier_stitching
+output_dir: outputs/cifar10/decision_thresholds/frontier_stitching/

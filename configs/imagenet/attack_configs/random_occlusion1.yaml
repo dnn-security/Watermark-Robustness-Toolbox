@@ -1,0 +1,37 @@
+create:
+  name: random_occlusion_attack
+  num_classes: 1000
+
+remove:
+  name: random_occlusion_removal
+  epochs: 1
+  repeats: 5
+  boost_factor: 1
+  check_every_n_batches: 200
+  epsilon: 0.9
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  apply_augmentation: True
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+# This dataset is used to sample the occluded images.
+# It is important to shut off augmentation and normalization.
+subset_dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  apply_augmentation: False
+  apply_normalization: False
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  top_k: 1
+
+true_labels: False
+name: random_occlusion1
+output_dir: outputs/imagenet/attacks/random_occlusion1/

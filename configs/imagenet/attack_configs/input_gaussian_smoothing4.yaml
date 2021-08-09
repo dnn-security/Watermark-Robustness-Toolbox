@@ -1,0 +1,22 @@
+create:
+  name: input_gaussian_smoothing_attack
+  num_classes: 1000
+  std: 0.5
+
+remove:
+  name: input_gaussian_smoothing_removal
+  epochs: 2
+  epsilon: 0.2
+  check_every_n_batches: 200
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: True
+name: input_gaussian_smoothing4
+output_dir: outputs/imagenet/attacks/input_gaussian_smoothing4/

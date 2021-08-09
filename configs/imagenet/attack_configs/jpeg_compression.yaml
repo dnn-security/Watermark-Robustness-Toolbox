@@ -1,0 +1,20 @@
+create:
+  name: jpeg_compression_attack
+  num_classes: 1000
+  quality: 95
+
+remove:
+  name: jpeg_compression_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+# Dataset is unused, so we can set 'true_labels' to true.
+true_labels: True
+name: jpeg_compression
+output_dir: outputs/imagenet/attacks/jpeg_compression/

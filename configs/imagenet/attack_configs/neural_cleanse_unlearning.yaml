@@ -1,0 +1,39 @@
+create:
+  name: neural_cleanse_partial_unlearning_attack
+  extract: True
+  num_classes: 1000
+  n_samples: 50000  # Maximum number of samples to load (limited by RAM)
+  extract_kwargs:
+    source_classes: [ 3 ]
+    target_classes: [ 4 ]
+    extract_epochs: 30
+    finetune_epochs: 5
+    lmbda: 0.01
+    batch_size: 64
+
+remove:
+  name: neural_cleanse_partial_unlearning_removal
+  check_wm_acc_every_n_batches: 200
+  boost_factor: 100
+  epochs: 5
+
+subset_dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  class_labels: [3, 4]
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: neural_cleanse_partial_unlearning
+output_dir: outputs/imagenet/attacks/neural_cleanse_partial_unlearning/

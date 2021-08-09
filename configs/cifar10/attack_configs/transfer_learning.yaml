@@ -1,0 +1,46 @@
+create:
+  name: transfer_learning_attack
+  lr: 0.001
+  freeze: False
+  num_classes: 10
+  image_size: 32
+  parent_shape: 224
+  train_all_params_after_n_batches: 0
+  removed_layers: ['fc']
+  preprocessor: cifar
+  layer_bounds: []
+  layer_lrs: []
+
+surrogate_model:
+  name: resnet34
+  image_size: 32
+  num_classes: 10
+  pretrained: True
+
+remove:
+  name: transfer_learning_removal
+  epochs: 5
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+optimizer:
+  name: SGD
+  lr: 0.001
+  weight_decay: 0.0001
+  momentum: 0.9
+  nesterov: True
+
+scheduler:
+  name: MultiStepLR
+  milestones: [3,4]
+  gamma: 0.1
+
+true_labels: True
+name: transfer_learning
+output_dir: outputs/cifar10/attacks/transfer_learning/

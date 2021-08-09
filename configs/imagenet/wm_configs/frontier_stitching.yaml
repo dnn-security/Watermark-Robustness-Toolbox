@@ -1,0 +1,53 @@
+wm_scheme:
+  name: wm_frontier_stitching
+  eps: 0.25
+  num_classes: 1000
+valid_epsilons_from_paper: 0.025,0.1,0.25
+
+embed:
+  name: wm_frontier_stitching_embed
+  keylength: 100
+  key_expansion_factor: 50
+  min_val: 1.0
+  epochs: 5
+  patience: 5
+  boost_factor: 1000
+  decrease_lr_factor: 1.0
+  batch_size: 64
+
+source_model:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+wm_dataset:
+  name: ImageNetDataLoader
+  apply_normalization: False
+  apply_augmentation: False
+  subset: defender
+  train: True
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  n_test: 5000
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: frontier_stitching
+output_dir: outputs/imagenet/wm/frontier_stitching/
+
+

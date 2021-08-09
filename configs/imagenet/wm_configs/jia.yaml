@@ -1,0 +1,70 @@
+wm_scheme:
+  name: wm_jia
+  snnl_weight: 64
+  layer: 63
+  rate: 10
+  pos: (0, 100, 100),
+  trigger_width: 80
+  trigger_height: 80
+  num_classes: 1000
+
+embed:
+  name: wm_jia_embed
+  epochs: 60
+  keylength: 100
+  embedding_keylength: 300
+  reduced_lr_rate: 10.0
+  source_class: 3
+  target_class: 4
+  boost_factor_source: 20
+  patience: 5
+  check_every_n_batches: 200
+
+source_model:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+wm_dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  apply_normalization: False
+  apply_augmentation: False
+  class_labels: 3
+  train: True
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+wm_dataset_target:
+  name: ImageNetDataLoader
+  subset: defender
+  apply_normalization: False
+  apply_augmentation: False
+  class_labels: 4
+  train: True
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: jia
+output_dir: outputs/imagenet/wm/jia/
+
+

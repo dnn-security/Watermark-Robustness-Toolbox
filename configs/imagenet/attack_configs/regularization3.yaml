@@ -1,0 +1,24 @@
+create:
+  name: regularization_attack
+  num_classes: 1000
+  image_size: 224
+
+remove:
+  name: regularization_removal
+  l2_decay: 0.001
+  reg_epochs: 10
+  max_ft_epochs: 3
+  ft_patience: 5
+  check_every_n_batches: 1000
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: regularization3
+output_dir: outputs/imagenet/attacks/regularization3/

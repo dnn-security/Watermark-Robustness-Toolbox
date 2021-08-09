@@ -1,0 +1,32 @@
+create:
+  name: neural_cleanse_partial_pruning_attack
+  extract: True
+  num_classes: 1000
+  ratio: 0.1
+  layer_name: layer4
+  layer_index: 64
+  extract_kwargs:
+    source_classes: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+    target_classes: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+    extract_epochs: 2
+    extract_steps: 10
+    finetune_epochs: 2
+    finetune_steps: 30
+    lmbda: 0.01
+    batch_size: 64
+
+remove:
+  name: neural_cleanse_partial_pruning_removal
+  epochs: 5
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: neural_cleanse_partial_pruning
+output_dir: outputs/imagenet/attacks/neural_cleanse_partial_pruning/

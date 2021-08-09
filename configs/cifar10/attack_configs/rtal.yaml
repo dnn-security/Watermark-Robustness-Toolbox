@@ -1,0 +1,19 @@
+create:
+  name: rtal_attack
+  num_classes: 10
+
+remove:
+  name: rtal_removal
+  epochs: 5
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: False
+name: rtal
+output_dir: outputs/cifar10/attacks/rtal/

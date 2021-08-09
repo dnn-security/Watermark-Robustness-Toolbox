@@ -1,0 +1,93 @@
+attack_list: [attack1, attack2]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 32
+  num_workers: 2
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: True
+name: stacked_attack
+output_dir: outputs/cifar10/attacks/combined_attack/
+
+attack1:
+  create:
+    name: transfer_learning_attack
+    lr: 0.001
+    freeze: False
+    num_classes: 10
+    image_size: 32
+    parent_shape: 224
+    train_all_params_after_n_batches: 0
+    removed_layers: [ 'fc' ]
+    preprocessor: cifar
+    layer_bounds: [ ]
+    layer_lrs: [ ]
+
+  surrogate_model:
+    name: resnet34
+    image_size: 32
+    num_classes: 10
+    pretrained: True
+
+  remove:
+    name: transfer_learning_removal
+    epochs: 5
+
+  dataset:
+    name: CIFAR10DataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 32
+    num_workers: 2
+
+  optimizer:
+    name: SGD
+    lr: 0.001
+    weight_decay: 0.0001
+    momentum: 0.9
+    nesterov: True
+
+  scheduler:
+    name: MultiStepLR
+    milestones: [3,4]
+    gamma: 0.1
+
+  true_labels: False
+  name: transfer_learning
+  output_dir: outputs/cifar10/attacks/transfer_learning/
+
+attack2:
+  create:
+    name: input_gaussian_smoothing_attack
+    num_classes: 10
+    std: 0.5
+
+  remove:
+    name: input_gaussian_smoothing_removal
+
+  dataset:
+    name: CIFAR10DataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    download: False
+    batch_size: 64
+    image_size: 32
+    num_workers: 2
+
+  true_labels: True
+  name: input_gaussian_smoothing
+  output_dir: outputs/cifar10/attacks/input_gaussian_smoothing/
+
+
+

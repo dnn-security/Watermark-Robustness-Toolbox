@@ -1,0 +1,19 @@
+create:
+  name: feature_squeezing_attack
+  num_classes: 1000
+  bit_depth: 7
+
+remove:
+  name: feature_squeezing_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: True
+name: feature_squeezing1
+output_dir: outputs/imagenet/attacks/feature_squeezing1/

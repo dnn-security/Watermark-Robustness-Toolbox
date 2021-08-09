@@ -1,0 +1,21 @@
+create:
+  name: input_reconstruction_attack
+  dataset: cifar10
+  complexity: 128
+  num_classes: 10
+
+remove:
+  name: input_reconstruction_removal
+
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: True
+name: input_noising
+output_dir: outputs/cifar10/attacks/input_noising/

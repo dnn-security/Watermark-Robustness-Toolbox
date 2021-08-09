@@ -1,0 +1,23 @@
+create:
+  name: label_smoothing_attack
+  num_classes: 1000
+
+remove:
+  name: label_smoothing_removal
+  epochs: 20
+  check_every_n_batches: 200
+  top_k: 3
+  epsilon: 0.9
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  n_test: 5000
+
+true_labels: False
+name: label_smoothing
+output_dir: outputs/imagenet/attacks/label_smoothing/

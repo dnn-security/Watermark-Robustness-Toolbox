@@ -1,0 +1,20 @@
+create:
+  name: weight_quantization_attack
+
+remove:
+  name: weight_quantization_removal
+  epochs: 1
+  bits: 6
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  download: False
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: False
+name: weight_quantization1
+output_dir: outputs/cifar10/attacks/weight_quantization1/

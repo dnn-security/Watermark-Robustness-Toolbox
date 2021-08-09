@@ -1,0 +1,48 @@
+wm_scheme:
+  name: wm_deepmarks
+  layer_index: 0
+  gamma: 1
+  num_classes: 1000
+
+secret_keys:
+  name: wm_deepmarks_keygen
+  num_classes: 1000
+  image_size: 224
+
+source_model_architecture:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+null_model_architecture:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+null_models:
+  name: load_null_models_resnet
+  paths: ['outputs/imagenet/null_models/00000_null_model/best.pth',
+          'outputs/imagenet/null_models/00001_null_model/best.pth',
+          'outputs/imagenet/null_models/00002_null_model/best.pth',
+          'outputs/imagenet/null_models/00003_null_model/best.pth'
+  ]
+  num_classes: 1000
+  image_size: 224
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+dataset:
+  name: ImageNetDataLoader
+  subset: all
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: deepmarks
+output_dir: outputs/imagenet/decision_thresholds/deepmarks

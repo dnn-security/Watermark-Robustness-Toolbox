@@ -1,0 +1,98 @@
+attack_list: [attack1, attack2]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  n_test: 5000
+  n_train: 150000
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: False
+name: combined_attack5
+output_dir: outputs/imagenet/attacks/combined_attack5/
+
+attack1:
+  pretrained:
+    jia: outputs/imagenet/attacks/cross_architecture_retraining/00000_retraining_attack_wm_jia/checkpoint.pth
+
+  create:
+    name: retraining_attack
+    num_classes: 1000
+    image_size: 224
+
+  remove:
+    name: retraining_removal
+    epochs: 60
+    batch_size: 64
+
+  surrogate_model:
+    name: ImageNetDenseNetModel
+    num_classes: 1000
+    image_size: 224
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: all
+    root: ~/.wrt/data
+    batch_size: 32
+    image_size: 224
+    num_workers: 16
+
+  optimizer:
+    name: SGD
+    lr: 0.1
+    weight_decay: 0.0001
+    momentum: 0.9
+
+  scheduler:
+    name: ReduceLROnPlateau
+    factor: 0.1
+    patience: 2
+    verbose: True
+
+  true_labels: False
+  name: cross_architecture_retraining_attack
+  output_dir: outputs/imagenet/attacks/cross_architecture_retraining/
+
+attack2:
+  predict_labels: False
+
+  create:
+    name: label_smoothing_attack
+    num_classes: 1000
+
+  remove:
+    name: label_smoothing_removal
+    epochs: 20
+    check_every_n_batches: 200
+    top_k: 3
+    epsilon: 0.5
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+    n_test: 5000
+    n_train: 50000
+
+  true_labels: False
+  name: label_smoothing
+  output_dir: outputs/imagenet/attacks/label_smoothing/
+
+
+
+
+

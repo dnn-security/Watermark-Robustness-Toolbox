@@ -1,0 +1,130 @@
+attack_list: [attack1, attack2, attack3, attack4]
+
+create:
+  name: stacked_attack
+
+remove:
+  name: stacked_attack_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+  n_test: 1000
+
+# This dataset is not used. True labels are only given to speed up runtime.
+true_labels: True
+name: combined_attack2
+output_dir: outputs/imagenet/attacks/combined_attack2/
+
+attack1:
+  pretrained:
+    jia: outputs/imagenet/attacks/retraining/00014_retraining_attack_wm_jia/checkpoint.pth
+
+  create:
+    name: retraining_attack
+    num_classes: 1000
+    image_size: 224
+
+  remove:
+    name: retraining_removal
+    epochs: 60
+    batch_size: 64
+
+  surrogate_model:
+    name: imagenet_resnet
+    num_classes: 1000
+    image_size: 224
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: all
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  optimizer:
+    name: SGD
+    lr: 0.1
+    weight_decay: 0.0001
+    momentum: 0.9
+
+  scheduler:
+    name: ReduceLROnPlateau
+    factor: 0.1
+    patience: 2
+    verbose: True
+
+  name: retraining_attack
+  output_dir: outputs/imagenet/attacks/retraining/
+
+attack4:
+  create:
+    name: input_gaussian_smoothing_attack
+    num_classes: 1000
+    std: 0.5
+
+  remove:
+    name: input_gaussian_smoothing_removal
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  # We do not use the dataset, hence we can set true labels to True.
+  true_labels: True
+  name: input_gaussian_smoothing2
+  output_dir: outputs/imagenet/attacks/input_gaussian_smoothing2/
+
+attack3:
+  create:
+    name: input_noising_attack
+    num_classes: 1000
+    mean: 0
+    std: 0.05
+
+  remove:
+    name: input_noising_removal
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  # Dataset is unused, so we can set 'true_labels' to true.
+  true_labels: True
+  name: input_noising2
+  output_dir: outputs/imagenet/attacks/input_noising2/
+
+attack2:
+  create:
+    name: input_flipping_attack
+    num_classes: 1000
+
+  remove:
+    name: input_flipping_removal
+
+  dataset:
+    name: ImageNetDataLoader
+    subset: attacker
+    root: ~/.wrt/data
+    batch_size: 64
+    image_size: 224
+    num_workers: 16
+
+  true_labels: True
+  name: input_flipping
+  output_dir: outputs/imagenet/attacks/input_flipping/
+
+

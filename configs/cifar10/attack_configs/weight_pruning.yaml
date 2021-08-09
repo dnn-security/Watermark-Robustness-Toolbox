@@ -1,0 +1,31 @@
+create:
+  name: weight_pruning_attack
+  sparsity: 0.5
+
+remove:
+  name: weight_pruning_removal
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: attacker
+  train: True
+  download: False
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+dataset_unnormalized:
+  name: CIFAR10DataLoader
+  subset: attacker
+  apply_normalization: False
+  train: True
+  download: False
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+true_labels: True
+name: weight_pruning
+output_dir: outputs/cifar10/attacks/weight_pruning/

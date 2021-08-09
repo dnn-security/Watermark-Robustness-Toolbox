@@ -1,0 +1,37 @@
+create:
+  name: retraining_attack
+  num_classes: 10
+  image_size: 32
+
+surrogate_model:
+  name: cifar_wide_resnet_features
+  image_size: 32
+  num_classes: 10
+
+remove:
+  name: retraining_removal
+  epochs: 60
+
+dataset:
+  name: CIFAR10DataLoader
+  subset: all
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 32
+  num_workers: 2
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  nesterov: True
+
+scheduler:
+  name: MultiStepLR
+  milestones: [20, 35, 50]
+  gamma: 0.2
+
+true_labels: False
+name: retraining
+output_dir: outputs/cifar10/attacks/retraining/

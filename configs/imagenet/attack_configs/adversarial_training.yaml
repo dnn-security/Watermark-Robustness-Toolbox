@@ -1,0 +1,25 @@
+create:
+  name: adversarial_training_attack
+  eps: [0.01, 0.1, 0.25]
+  eps_step: 0.01
+  max_iter: 30
+  num_classes: 1000
+
+remove:
+  name: adversarial_training_removal
+  epochs: 3
+  boost_factor: 10         # Number of times each sample is repeated per epoch.
+  n_max: 1000             # Maximal number of adversarial examples to generate per epoch.
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  apply_augmentation: False
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+true_labels: False
+name: adversarial_training
+output_dir: outputs/imagenet/attacks/adversarial_training/

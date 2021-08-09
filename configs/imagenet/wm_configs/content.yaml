@@ -1,0 +1,64 @@
+wm_scheme:
+  name: wm_content
+  num_classes: 1000
+  pos: (0, 10, 10),
+  size: 80
+
+embed:
+  name: wm_content_embed
+  source_class: 4
+  target_class: 6
+  epochs: 5
+  keylength: 100
+  patience: 5
+  check_every_n_batches: 500
+  decrease_lr_factor: 10
+  boost_factor: 500
+#
+source_model:
+  name: imagenet_resnet
+  image_size: 224
+  num_classes: 1000
+
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 5.e-4
+  momentum: 0.9
+  nesterov: true
+
+wm_dataset2:
+  name: FlatImagesDataLoader
+  apply_normalization: False
+  apply_augmentation: False
+  class_labels: 4
+  subset: defender
+  root: ~/.wrt/data/ILSVRC/Data/CLS-LOC/test
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+wm_dataset:
+  name: ImageNetDataLoader
+  apply_normalization: False
+  apply_augmentation: False
+  class_labels: 4
+  train: True
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+dataset:
+  name: ImageNetDataLoader
+  subset: defender
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+name: content
+output_dir: outputs/imagenet/wm/content/
+
+

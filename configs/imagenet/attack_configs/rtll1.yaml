@@ -1,0 +1,26 @@
+create:
+  name: rtll_attack
+  num_classes: 1000
+
+remove:
+  name: rtll_removal
+  lr: 0.1
+  epochs: 5
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 32
+  image_size: 224
+  num_workers: 16
+  top_k: 1
+
+scheduler:
+  name: MultiStepLR
+  milestones: [1,2,3]
+  gamma: 0.1
+
+true_labels: False
+name: rtll1
+output_dir: outputs/imagenet/attacks/rtll1/

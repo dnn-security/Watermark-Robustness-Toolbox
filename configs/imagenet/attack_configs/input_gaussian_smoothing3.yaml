@@ -1,0 +1,20 @@
+create:
+  name: input_gaussian_smoothing_attack
+  num_classes: 1000
+  std: 0.7
+
+remove:
+  name: input_gaussian_smoothing_removal
+
+dataset:
+  name: ImageNetDataLoader
+  subset: attacker
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 224
+  num_workers: 16
+
+# We do not use the dataset, hence we can set true labels to True.
+true_labels: True
+name: input_gaussian_smoothing3
+output_dir: outputs/imagenet/attacks/input_gaussian_smoothing3/
