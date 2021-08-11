@@ -3,7 +3,7 @@
 ![Python 3.6](https://img.shields.io/badge/python-3.6-green.svg?style=plastic)
 ![PyTorch 1.3.1](https://img.shields.io/badge/torch-1.3.1-green.svg?style=plastic)
 ![cuDNN 10.1.2](https://img.shields.io/badge/cudnn-10.1.2-green.svg?style=plastic)
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://crysp.uwaterloo.ca/research/mlsec/wrt)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 
 This repository contains the official PyTorch implementation of the following paper to appear at IEEE Security and Privacy 2022:
