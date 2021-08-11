@@ -138,9 +138,9 @@ The codebase has been based off an early version of the
 ```
 @InProceedings{lukas2022watermarkingsok,
   title={SoK: How Robust is Deep Neural Network Image Classification Watermarking?}, 
-  author={Nils Lukas, Edward Jiang, Xinda Li, and Florian Kerschbaum},
+  author={Lukas, Nils and Jiang, Edward and Li, Xinda and Kerschbaum, Florian},
   year={2022},
-  booktitle={IEEE Security and Privacy}
+  booktitle={IEEE Symposium on Security and Privacy}
 }
 ```
 
