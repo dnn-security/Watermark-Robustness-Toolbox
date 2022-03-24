@@ -1,5 +1,5 @@
 ## Watermark-Robustness-Toolbox - Official PyTorch Implementation
-[![contact](https://img.shields.io/badge/contact-nlukas@uwaterloo.ca-yellow)](mailto:rbp5354@psu.edu)
+[![contact](https://img.shields.io/badge/contact-nlukas@uwaterloo.ca-yellow)](mailto:nlukas@uwaterloo.ca)
 ![Python 3.6](https://img.shields.io/badge/python-3.6-green.svg?style=plastic)
 ![PyTorch 1.3.1](https://img.shields.io/badge/torch-1.3.1-green.svg?style=plastic)
 ![cuDNN 10.1.2](https://img.shields.io/badge/cudnn-10.1.2-green.svg?style=plastic)
