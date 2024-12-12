@@ -69,22 +69,29 @@ def main():
 
     device = torch.device('cuda' if torch.cuda.is_available() and not args.no_cuda else 'cpu')
 
-    model: torch.nn.Sequential = config.model()
+    model: torch.nn.Sequential = mlconfig.instantiate(config.model)
     model = model.to(device)
 
-    optimizer = config.optimizer(model.parameters())
-    scheduler = config.scheduler(optimizer)
+    optimizer = mlconfig.instantiate(config.optimizer, model.parameters())
+    scheduler = mlconfig.instantiate(config.scheduler, optimizer=optimizer)
 
     model: PyTorchClassifier = __load_model(model,
                                             optimizer=optimizer,
                                             image_size=config.model.image_size,
                                             num_classes=config.model.num_classes)
 
-    train_loader = config.dataset(train=True)
-    valid_loader = config.dataset(train=False)
+    train_loader = mlconfig.instantiate(config.dataset, train=True)
+    valid_loader = mlconfig.instantiate(config.dataset, train=False)
 
-    trainer = config.trainer(model=model, train_loader=train_loader, valid_loader=valid_loader,
-                             scheduler=scheduler,  device=device, output_dir=output_dir)
+    trainer = mlconfig.instantiate(
+        config.trainer,
+        model=model,
+        train_loader=train_loader,
+        valid_loader=valid_loader,
+        scheduler=scheduler,
+        device=device,
+        output_dir=output_dir
+    )
 
     if args.resume is not None:
         trainer.resume(args.resume)

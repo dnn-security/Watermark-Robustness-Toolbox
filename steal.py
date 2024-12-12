@@ -125,15 +125,15 @@ def main():
 
     model_basedir, model_filename = os.path.split(pth_file)
 
-    source_model = defense_config.source_model()
+    source_model = mlconfig.instantiate(defense_config.source_model)
     source_model = source_model.to(device)
-    optimizer = defense_config.optimizer(source_model.parameters())
+    optimizer = mlconfig.instantiate(defense_config.optimizer, source_model.parameters())
     source_model = __load_model(source_model, optimizer,
                                 image_size=defense_config.source_model.image_size,
                                 num_classes=defense_config.source_model.num_classes,
                                 defense_filename=pth_file)
 
-    defense = defense_config.wm_scheme(classifier=source_model, optimizer=optimizer, config=defense_config)
+    defense = mlconfig.instantiate(defense_config.wm_scheme, classifier=source_model, optimizer=optimizer, config=defense_config)
     x_wm, y_wm = defense.load(filename=model_filename, path=model_basedir)
 
     print(y_wm)
@@ -142,12 +142,12 @@ def main():
     print(f"Using ground truth labels? {use_gt}")
     if use_gt:
         print("Using ground-truth labels ..")
-        train_loader = attack_config.dataset(train=True)
-        valid_loader = attack_config.dataset(train=False)
+        train_loader = mlconfig.instantiate(attack_config.dataset, train=True)
+        valid_loader = mlconfig.instantiate(attack_config.dataset, train=False)
     else:
         print("Using predicted labels ..")
-        train_loader = attack_config.dataset(source_model=source_model, train=True)
-        valid_loader = attack_config.dataset(source_model=source_model, train=False)
+        train_loader = mlconfig.instantiate(attack_config.dataset, source_model=source_model, train=True)
+        valid_loader = mlconfig.instantiate(attack_config.dataset, source_model=source_model, train=False)
 
     source_test_acc_before_attack = evaluate_test_accuracy(source_model, valid_loader)
     print(f"Source model test acc: {source_test_acc_before_attack:.4f}")
@@ -155,8 +155,8 @@ def main():
     print(f"Source model wm acc: {source_wm_acc:.4f}")
 
     if "surrogate_model" in attack_config.keys():
-        surrogate_model = attack_config.surrogate_model()
-        optimizer = attack_config.optimizer(surrogate_model.parameters())
+        surrogate_model = mlconfig.instantiate(attack_config.surrogate_model)
+        optimizer = mlconfig.instantiate(attack_config.optimizer, surrogate_model.parameters())
         surrogate_model = __load_model(surrogate_model, optimizer,
                                        image_size=attack_config.surrogate_model.image_size,
                                        num_classes=attack_config.surrogate_model.num_classes)
@@ -182,11 +182,12 @@ def main():
         print(f"[ERROR] {e}")
         print("Could not extract watermark accuracy from the surrogate model ... Continuing ..")
 
-    attack: RemovalAttack = attack_config.create(classifier=surrogate_model, config=attack_config)
+    attack: RemovalAttack = mlconfig.instantiate(attack_config.create, classifier=surrogate_model, config=attack_config)
 
     # Run the removal. We still need wrappers to conform to the old interface.
     start = time.time()
-    attack, train_metric = attack_config.remove(attack=attack,
+    attack, train_metric = mlconfig.instantiate(attack_config.remove,
+                                                attack=attack,
                                                 source_model=source_model,
                                                 train_loader=train_loader,
                                                 valid_loader=valid_loader,

@@ -975,6 +975,7 @@ class PyTorchClassifier(Classifier):  # lgtm [py/missing-call-to-init]
             return isinstance(self.loss, (torch.nn.CrossEntropyLoss, torch.nn.NLLLoss, torch.nn.MultiMarginLoss))
 
         def compute_loss(self, pred, true, x=None):
+            true = true.to(torch.int64)
             return self.loss(pred, true)
 
         def __call__(self, *args, **kwargs):

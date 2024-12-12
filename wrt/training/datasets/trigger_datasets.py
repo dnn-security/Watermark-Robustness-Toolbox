@@ -31,7 +31,7 @@ class Trigger(Dataset):
 
 
 class AdiTrigger(Trigger):
-    url = "https://www.dropbox.com/s/z11ds7jvewkgv18/adi.zip?dl=1"
+    url = "https://www.dropbox.com/scl/fi/5fbrlbkxwlse8zotgih3z/adi.zip?rlkey=trg2s2fm9tx57uhn2c8tdzc46&st=ae39w6mn&dl=0"
     filename = "adi.zip"
     folder_name = "adi"
 

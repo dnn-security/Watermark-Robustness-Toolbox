@@ -94,8 +94,8 @@ def main():
     path, filename = os.path.split(args.wm_config)
     copyfile(args.wm_config, os.path.join(output_dir, filename))
 
-    source_model: torch.nn.Sequential = defense_config.source_model()
-    optimizer = defense_config.optimizer(source_model.parameters())
+    source_model: torch.nn.Sequential = mlconfig.instantiate(defense_config.source_model)
+    optimizer = mlconfig.instantiate(defense_config.optimizer, source_model.parameters())
 
     source_model: PyTorchClassifier = __load_model(source_model,
                                                    optimizer,
@@ -104,26 +104,27 @@ def main():
                                                    filename=args.filename,
                                                    pretrained_dir=args.pretrained_dir)
     # Load the training and testing data.
-    train_loader = defense_config.dataset(train=True)
-    valid_loader = defense_config.dataset(train=False)
+    train_loader = mlconfig.instantiate(defense_config.dataset, train=True)
+    valid_loader = mlconfig.instantiate(defense_config.dataset, train=False)
 
     # Optionally load a dataset to load watermarking images from.
     wm_loader = None
     if "wm_dataset" in dict(defense_config).keys():
-        wm_loader = defense_config.wm_dataset()
+        wm_loader = mlconfig.instantiate(defense_config.wm_dataset)
         print(f"Instantiated watermark loader (with {len(wm_loader)} batches): {wm_loader}")
 
     source_test_acc_before_attack = evaluate_test_accuracy(source_model, valid_loader)
     print(f"Source model test acc (before): {source_test_acc_before_attack}")
 
     # Create the defense instance with the pretrained source model. Note: The source model is copied here.
-    defense: Watermark = defense_config.wm_scheme(source_model, config=defense_config)
+    defense: Watermark = mlconfig.instantiate(defense_config.wm_scheme, source_model, config=defense_config)
 
     # Save this configuration.
+    from omegaconf import OmegaConf
     with open(os.path.join(output_dir, "config.json"), "w") as f:
         config = {
             "timestamp": str(datetime.now()),
-            "defense_config": defense_config,
+            "defense_config": OmegaConf.to_container(defense_config, resolve=True),
             "args": vars(args)
         }
         json.dump(config, f)
@@ -131,7 +132,8 @@ def main():
     # Embed the watermark. Note that all inputs are copied here.
     # We assume the defense stores the model and all auxiliary information in the output directory.
     start_time = time.time()
-    (x_wm, y_wm), defense = defense_config.embed(defense=defense,
+    (x_wm, y_wm), defense = mlconfig.instantiate(defense_config.embed, 
+                                                 defense=defense,
                                                  train_loader=train_loader,
                                                  valid_loader=valid_loader,
                                                  wm_loader=wm_loader,
