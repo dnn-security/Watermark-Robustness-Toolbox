@@ -94,8 +94,10 @@ def main():
     # Takes more time at startup, but optimizes runtime.
     torch.backends.cudnn.benchmark = True
 
-    args = parse_args()
-    reserve_gpu(args.gpu)
+    if args.gpu is None:
+    args.gpu = reserve_gpu()  # Automatically selects the least busy GPU.
+    elif not torch.cuda.is_available():
+    print("CUDA is not available. Running on CPU.")
 
     defense_config = mlconfig.load(args.wm_config)
     print(defense_config)
